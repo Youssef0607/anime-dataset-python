@@ -18,4 +18,4 @@ Ce projet Python a pour but de :
   `score_final = 0.6 * Note_Globale + 0.4 * Popularité`  
 - La popularité est basée sur le nombre d'épisodes
 
-Auteur : Myriam Youssef# anime-dataset-python
+Auteur : Myriam Youssef
