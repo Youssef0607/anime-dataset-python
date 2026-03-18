@@ -1,4 +1,4 @@
-﻿# anime-dataset-python
+﻿# Anime-dataset-python
 # Analyse d'un dataset d'animés
 
 ## Objectif
