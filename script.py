@@ -1,37 +1,17 @@
-import csv
+import pandas as pd
 
-liste_animes = []
+df = pd.read_csv("animes.csv")
 
-with open("animes.csv", "r", encoding="utf-8") as fichier:
-    lecteur = csv.DictReader(fichier)
+df = df.dropna(subset=["Anime", "Note_Globale", "Nb_Episodes"])
 
-    for ligne in lecteur:
+df["Note_Globale"] = df["Note_Globale"].astype(float)
+df["Nb_Episodes"] = df["Nb_Episodes"].astype(float)
 
-        
-        if ligne["Anime"] != "" and ligne["Note_Globale"] != "" and ligne["Nb_Episodes"] != "":
-            try:
-                nom = ligne["Anime"]
-                note = float(ligne["Note_Globale"])
-                episodes = float(ligne["Nb_Episodes"])
+df["popularite"] = df["Nb_Episodes"] / 100
+df["score_final"] = 0.6 * df["Note_Globale"] + 0.4 * df["popularite"]
 
-                
-                popularite = episodes / 100
-
-                
-                score_final = 0.6 * note + 0.4 * popularite
-
-                liste_animes.append([nom, round(score_final, 2)])
-
-            except:
-                
-                pass
-
-
-liste_animes.sort(key=lambda x: x[1], reverse=True)
-
+df = df.sort_values(by="score_final", ascending=False)
 
 print("Top 10 des animés :")
-
-for i in range(10):
-    if i < len(liste_animes):
-        print(i+1, "-", liste_animes[i][0], "(score :", liste_animes[i][1], ")")
+for i in range(min(10, len(df))):
+    print(i+1, "-", df.iloc[i]["Anime"], "(score :", round(df.iloc[i]["score_final"], 2), ")")
